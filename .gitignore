@@ -34,3 +34,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Ignore workflow files in .github/workflows/
+.github/workflows/*
+
