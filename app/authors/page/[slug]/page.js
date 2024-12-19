@@ -7,17 +7,19 @@ import Authors from "@partials/Authors";
 
 // blog pagination
 const AuthorPagination = async ({ params }) => {
-  //
   const currentPage = parseInt((params && params.slug) || 1);
   const { pagination } = config.settings;
-  const authors = getSinglePage("content/authors");
+
+  // Fetching authors and author index
+  const authors = await getSinglePage("content/authors"); // Ensure this function is async
   const authorIndex = await getListPage("content/authors/_index.md");
 
-  //
+  // Paginate authors
   const indexOfLastAuthor = currentPage * pagination;
   const indexOfFirstAuthor = indexOfLastAuthor - pagination;
   const totalPages = Math.ceil(authors.length / pagination);
   const currentAuthors = authors.slice(indexOfFirstAuthor, indexOfLastAuthor);
+
   const { frontmatter, content } = authorIndex;
   const { title } = frontmatter;
 
@@ -42,16 +44,17 @@ const AuthorPagination = async ({ params }) => {
 export default AuthorPagination;
 
 // get authors pagination slug
-export const generateStaticParams = () => {
-  const getAllSlug = getSinglePage("content/authors");
-  const allSlug = getAllSlug.map((item) => item.slug);
+export const generateStaticParams = async () => {
+  const getAllSlug = await getSinglePage("content/authors"); // Make async
   const { pagination } = config.settings;
-  const totalPages = Math.ceil(allSlug.length / pagination);
+
+  // Ensure slugs are mapped correctly
+  const totalPages = Math.ceil(getAllSlug.length / pagination);
   let paths = [];
 
-  for (let i = 1; i < totalPages; i++) {
+  for (let i = 1; i <= totalPages; i++) {
     paths.push({
-      slug: (i + 1).toString(),
+      slug: i.toString(),
     });
   }
 
