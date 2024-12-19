@@ -2,12 +2,12 @@
  * @type {import('next').NextConfig}
  */
 
-module.exports = {
+const nextConfig = {
   reactStrictMode: true,
-  basePath: '/tongxin-website',
-  assetPrefix: '/tongxin-website',
   images: {
-    unoptimized: true,
+    domains: ['bobofishbo.github.io'], // Add your GitHub Pages domain
+    unoptimized: true, // Disable image optimization if necessary
   },
 };
 
+module.exports = nextConfig;
