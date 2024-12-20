@@ -2,15 +2,18 @@
   "main": [
     {
       "name": "Home",
-      "url": "/"
+      "url": "/",
+      "hasChildren": false
     },
     {
       "name": "About",
-      "url": "/about"
+      "url": "/about",
+      "hasChildren": false
     },
     {
       "name": "Contact",
-      "url": "/contact"
+      "url": "/contact",
+      "hasChildren": false
     },
     {
       "name": "Pages",

@@ -21,13 +21,13 @@ const {
   {
     src || logo ? (
       <Image
-        width={logo_width.replace("px", "") * 2}
-        height={logo_height.replace("px", "") * 2}
+        width={logo_width.replace("px", "") * 1.3}
+        height={logo_height.replace("px", "") * 1.3}
         src={src ? src : logo}
         alt={title}
         style={{
-          height: logo_height.replace("px", "") + "px",
-          width: logo_width.replace("px", "") + "px",
+          height: logo_height.replace("px", "")*0.7 + "px",
+          width: logo_width.replace("px", "")*0.7 + "px",
         }}
       />
     ) : logo_text ? (

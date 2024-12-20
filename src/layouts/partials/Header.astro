@@ -2,6 +2,7 @@
 import Logo from "@/components/Logo.astro";
 import menu from "@/config/menu.json";
 import { IoSearch } from "react-icons/io5";
+import LanguageToggle from "@/components/LanguageToggle.astro";
 
 export interface ChildNavigationLink {
   name: string;
@@ -15,7 +16,18 @@ export interface NavigationLink {
   children?: ChildNavigationLink[];
 }
 
-const { main }: { main: NavigationLink[] } = menu;
+// Get language from URL or default to English
+const lang = Astro.url.searchParams.get("lang") || "en";
+
+// Translate menu items
+const translatedMenu = menu.main.map((item) => ({
+  ...item,
+  name: item.translations ? item.translations[lang] : item.name,
+  children: item.children?.map((child) => ({
+    ...child,
+    name: child.translations ? child.translations[lang] : child.name,
+  })),
+}));
 
 // Base path
 const basePath = "/tongxin-website/";
@@ -53,47 +65,58 @@ const ensureTrailingSlash = (url) => {
         <title>Menu Close</title>
         <polygon
           points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-          transform="rotate(45 10 10)"></polygon>
+          transform="rotate(45 10 10)"
+        ></polygon>
       </svg>
     </label>
-    <!-- /navbar toggler -->
 
+    <!-- Navigation menu -->
     <ul
       id="nav-menu"
       class="navbar-nav order-3 hidden w-full md:order-1 md:flex md:w-auto"
     >
-      {
-        main.map((menu) => (
-          <>
-            {menu.hasChildren ? (
-              <li class="nav-item nav-dropdown group relative cursor-pointer">
-                <span class="nav-link inline-flex items-center">
-                  {menu.name}
-                  <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </span>
-                <ul class="nav-dropdown-list hidden group-hover:block md:invisible md:absolute md:block md:opacity-0 md:group-hover:visible md:group-hover:opacity-100">
-                  {menu.children?.map((child) => (
-                    <li class="nav-dropdown-item">
-                      <a href={ensureTrailingSlash(`${basePath}${child.url.replace(/^\//, '')}`)} class="nav-dropdown-link">
-                        {child.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ) : (
-              <li class="nav-item">
-                <a href={ensureTrailingSlash(`${basePath}${menu.url.replace(/^\//, '')}`)} class="nav-link block">
-                  {menu.name}
-                </a>
-              </li>
-            )}
-          </>
-        ))
-      }
+      {translatedMenu.map((menu) => (
+        <>
+          {menu.hasChildren ? (
+            <li class="nav-item nav-dropdown group relative cursor-pointer">
+              <span class="nav-link inline-flex items-center">
+                {menu.name}
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </span>
+              <ul class="nav-dropdown-list hidden group-hover:block md:invisible md:absolute md:block md:opacity-0 md:group-hover:visible md:group-hover:opacity-100">
+                {menu.children?.map((child) => (
+                  <li class="nav-dropdown-item">
+                    <a
+                      href={ensureTrailingSlash(
+                        `${basePath}${child.url.replace(/^\//, "")}`
+                      )}
+                      class="nav-dropdown-link"
+                    >
+                      {child.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li class="nav-item">
+              <a
+                href={ensureTrailingSlash(
+                  `${basePath}${menu.url.replace(/^\//, "")}`
+                )}
+                class="nav-link block"
+              >
+                {menu.name}
+              </a>
+            </li>
+          )}
+        </>
+      ))}
     </ul>
+
+    <!-- Language toggle -->
     <div class="order-1 ml-auto flex md:order-2 md:ml-0">
       <a
         class="mr-4 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0"
@@ -103,6 +126,7 @@ const ensureTrailingSlash = (url) => {
       >
         <IoSearch />
       </a>
+      <LanguageToggle />
     </div>
   </nav>
 </header>

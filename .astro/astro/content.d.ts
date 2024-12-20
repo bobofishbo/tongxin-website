@@ -152,9 +152,16 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"about": {
-"index.md": {
-	id: "index.md";
-  slug: "index";
+"index.en.md": {
+	id: "index.en.md";
+  slug: "indexen";
+  body: string;
+  collection: "about";
+  data: any
+} & { render(): Render[".md"] };
+"index.zh.md": {
+	id: "index.zh.md";
+  slug: "indexzh";
   body: string;
   collection: "about";
   data: any
