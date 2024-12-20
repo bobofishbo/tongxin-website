@@ -17,7 +17,12 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap(),
-    tailwind(),
+    tailwind({
+      config: {
+        applyBaseStyles: true, // Allow Astro's base styles to apply
+      },
+    }),
+    
     AutoImport({
       imports: [
         "@/shortcodes/Button",
