@@ -8,6 +8,9 @@ import { BiCalendarEdit, BiCategoryAlt } from "react-icons/bi";
 const authors = await getSinglePage("authors");
 const { summary_length } = config.settings;
 const { className, posts, fluid } = Astro.props;
+
+// Base path
+const basePath = "/tongxin-website/";
 ---
 
 <div
@@ -18,12 +21,12 @@ const { className, posts, fluid } = Astro.props;
       <div class={i === 0 && fluid != false ? "col-12" : "col-12 sm:col-6"}>
         {post.data.image && (
           <a
-            href={`/${post.slug}`}
+            href={`${basePath}${post.slug}`}
             class="rounded-lg block hover:text-primary overflow-hidden group"
           >
             <Image
               class="group-hover:scale-[1.03] transition duration-300 w-full"
-              src={post.data.image}
+              src={`${basePath}${post.data.image}`}
               alt={post.data.title}
               width={i === 0 ? 925 : 445}
               height={i === 0 ? 475 : 230}
@@ -40,12 +43,12 @@ const { className, posts, fluid } = Astro.props;
               )
               .map((author) => (
                 <a
-                  href={`/authors/${slugify(author.data.title)}`}
+                  href={`${basePath}authors/${slugify(author.data.title)}`}
                   class="flex items-center hover:text-primary font-medium"
                 >
                   {author.data.image && (
                     <Image
-                      src={author.data.image}
+                      src={`${basePath}${author.data.image}`}
                       alt={author.data.title}
                       height={50}
                       width={50}
@@ -67,7 +70,7 @@ const { className, posts, fluid } = Astro.props;
                 {post.data.categories.map((category: string, i: number) => (
                   <li class="inline-block">
                     <a
-                      href={`/categories/${slugify(category)}`}
+                      href={`${basePath}categories/${slugify(category)}`}
                       class="mr-2 hover:text-primary font-medium"
                     >
                       {humanize(category)}
@@ -81,7 +84,7 @@ const { className, posts, fluid } = Astro.props;
         </ul>
         <h3 class="mb-4">
           <a
-            href={`/${post.slug}`}
+            href={`${basePath}${post.slug}`}
             class="block hover:text-primary transition duration-300"
           >
             {post.data.title}
