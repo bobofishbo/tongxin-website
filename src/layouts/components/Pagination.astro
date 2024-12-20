@@ -2,7 +2,7 @@
 const { section, currentPage, totalPages } = Astro.props;
 import config from "@/config/config.json"; // Import site config
 
-const basePath = config.site.base_path || ""; // Use base_path from config
+const basePath = 'config.site.base_path || ""; // Use base_path from config'
 const indexPageLink = currentPage === 2;
 const hasPrevPage = currentPage > 1;
 const hasNextPage = totalPages > currentPage;
@@ -126,3 +126,4 @@ for (let i = 1; i <= totalPages; i++) {
     </nav>
   )
 }
+
