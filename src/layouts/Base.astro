@@ -25,6 +25,9 @@ if (theme.fonts.font_family.secondary) {
     .replace(/:[ital,]*[ital@]*[wght@]*[0-9,;]+/gi, "");
 }
 
+// Helper function to get full asset path
+const getFullPath = (path) => `${config.site.base_url}${config.site.base_path}${path.replace(/^\//, '')}`;
+
 // types for frontmatters
 export interface Props {
   title?: string;
@@ -35,29 +38,21 @@ export interface Props {
   canonical?: string;
 }
 
-// distructure frontmatters
-const { title, meta_title, description, image, noindex, canonical } =
-  Astro.props;
+// destructure frontmatters
+const { title, meta_title, description, image, noindex, canonical } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <!-- favicon -->
-    <link rel="shortcut icon" href={config.site.favicon} />
+    <link rel="shortcut icon" href={getFullPath("images/favicon.png")} />
+
     <!-- theme meta -->
     <meta name="theme-name" content="bookworm-light-astro" />
     <meta name="msapplication-TileColor" content="#000000" />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: light)"
-      content="#fff"
-    />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: dark)"
-      content="#000"
-    />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
     <meta name="generator" content={Astro.generator} />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -86,10 +81,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     />
 
     <!-- responsive meta -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=5"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 
     <!-- title -->
     <title>
@@ -97,7 +89,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     </title>
 
     <!-- canonical url -->
-    {canonical && <link rel="canonical" href={canonical} item-prop="url" />}
+    {canonical && <link rel="canonical" href={getFullPath(canonical)} item-prop="url" />}
 
     <!-- noindex robots -->
     {noindex && <meta name="robots" content="noindex,nofollow" />}
@@ -105,9 +97,7 @@ const { title, meta_title, description, image, noindex, canonical } =
     <!-- meta-description -->
     <meta
       name="description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
+      content={plainify(description ? description : config.metadata.meta_description)}
     />
 
     <ViewTransitions />
@@ -118,53 +108,39 @@ const { title, meta_title, description, image, noindex, canonical } =
     <!-- og-title -->
     <meta
       property="og:title"
-      content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title,
-      )}
+      content={plainify(meta_title ? meta_title : title ? title : config.site.title)}
     />
 
     <!-- og-description -->
     <meta
       property="og:description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
+      content={plainify(description ? description : config.metadata.meta_description)}
     />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content={`https://bobofishbo.github.io/tongxin-website${Astro.url.pathname}`}
-    />
+    <meta property="og:url" content={getFullPath(Astro.url.pathname)} />
+
     <!-- twitter-title -->
     <meta
       name="twitter:title"
-      content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title,
-      )}
-    />gi
+      content={plainify(meta_title ? meta_title : title ? title : config.site.title)}
+    />
 
     <!-- twitter-description -->
     <meta
       name="twitter:description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
+      content={plainify(description ? description : config.metadata.meta_description)}
     />
 
     <!-- og-image -->
     <meta
       property="og:image"
-      content={`${config.site.base_url}${
-        image ? image : config.metadata.meta_image
-      }`}
+      content={getFullPath(image ? image : config.metadata.meta_image)}
     />
 
     <!-- twitter-image -->
     <meta
       name="twitter:image"
-      content={`${config.site.base_url}${
-        image ? image : config.metadata.meta_image
-      }`}
+      content={getFullPath(image ? image : config.metadata.meta_image)}
     />
     <meta name="twitter:card" content="summary_large_image" />
   </head>

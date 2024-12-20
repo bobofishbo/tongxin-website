@@ -8,22 +8,19 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
 
-// https://astro.build/config
 export default defineConfig({
-  site: "https://bobofishbo.github.io" ,
-  base: "/tongxin-website/", // Include your repository name
-  trailingSlash: "always",
-  image: {},
-  outDir: "dist", // Ensure this matches your workflow's path
+  site: "https://bobofishbo.github.io", // Your site URL
+  base: "/tongxin-website/", // Your repository name
+  trailingSlash: "always", // Ensure trailing slashes are consistent
+  outDir: "dist", // Output directory for GitHub Pages
   integrations: [
     react(),
     sitemap(),
     tailwind({
       config: {
-        applyBaseStyles: true, // Allow Astro's base styles to apply
+        applyBaseStyles: true,
       },
     }),
-    
     AutoImport({
       imports: [
         "@/shortcodes/Button",
@@ -52,5 +49,8 @@ export default defineConfig({
       wrap: true,
     },
     extendDefaultPlugins: true,
+  },
+  vite: {
+    base: "/tongxin-website/", // Ensures correct asset resolution during local dev
   },
 });
