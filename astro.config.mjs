@@ -10,7 +10,7 @@ import config from "./src/config/config.json";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://bobofishbo.github.io/tongxin-website/",
+  site: "https://bobofishbo.github.io/tongxin-website" ,
   base: "/tongxin-website/", // Include your repository name
   trailingSlash: "always",
   image: {},
