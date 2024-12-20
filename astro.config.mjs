@@ -14,6 +14,7 @@ export default defineConfig({
   base: "/tongxin-website/", // Include your repository name
   trailingSlash: "always",
   image: {},
+  outDir: "dist", // Ensure this matches your workflow's path
   integrations: [
     react(),
     sitemap(),
