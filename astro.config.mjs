@@ -13,6 +13,16 @@ export default defineConfig({
   base: "/tongxin-website/", // Your repository name
   trailingSlash: "always", // Ensure trailing slashes are consistent
   outDir: "dist", // Output directory for GitHub Pages
+  i18n: {
+    locales: ["en", "zh"], // Define all supported languages (English and Chinese in this case)
+    defaultLocale: "en", // Set the default language
+    routing: {
+      prefixDefaultLocale: false, // Whether or not to prefix the default locale in URLs
+    },
+    fallback: {
+      zh: "en" // If a page in Chinese is missing, fallback to English
+    },
+  },
   integrations: [
     react(),
     sitemap(),

@@ -15,41 +15,17 @@
 </div>
 
 <script client:load>
-  // Function to handle language toggle
-  function setLanguage(lang) {
-    console.log(`Switching language to: ${lang}`);
-    try {
-      const url = new URL(window.location);
-      url.searchParams.set("lang", lang);
+  // Attach setLanguage to window for global access
+  window.setLanguage = function (lang) {
+    const url = new URL(window.location);
+    url.searchParams.set("lang", lang);
+    window.location.href = url.toString();
+  };
 
-      // Log the updated URL
-      console.log(`Redirecting to: ${url.toString()}`);
-      window.location.href = url.toString();
-    } catch (error) {
-      console.error("Error setting language:", error);
-    }
-  }
-
-  // Initialize the toggle state on page load
-  window.addEventListener("DOMContentLoaded", () => {
-    try {
-      const currentLang = new URL(window.location).searchParams.get("lang") || "en";
-      const toggle = document.getElementById("languageToggle");
-      
-      // Ensure the toggle element exists
-      if (!toggle) {
-        console.error("Language toggle element not found!");
-        return;
-      }
-
-      // Set the toggle state based on the current language
-      toggle.checked = currentLang === "zh";
-      console.log(`Current language on load: ${currentLang}`);
-    } catch (error) {
-      console.error("Error initializing language toggle:", error);
-    }
-  });
-
-  // Attach the `setLanguage` function globally
-  window.setLanguage = setLanguage;
+  // Ensure the toggle reflects the current language
+  window.onload = function () {
+    const currentLang = new URL(window.location).searchParams.get("lang") || "en";
+    const toggle = document.getElementById("languageToggle");
+    toggle.checked = currentLang === "zh";
+  };
 </script>

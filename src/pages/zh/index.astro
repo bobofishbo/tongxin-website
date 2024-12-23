@@ -1,24 +1,17 @@
 ---
 import { Image } from "astro:assets";
-import Base from "@/layouts/Base.astro";
+import Base from "../../layouts/Base.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { getCollection } from "astro:content";
-
-// Use Astro's currentLocale to automatically determine the language
-const language = Astro.currentLocale || "en"; // Defaults to 'en' if no locale is set
-
-console.log("Selected language:", language); // Check which language is being used
 
 // Fetch all entries for the "about" collection
 const allEntries = await getCollection("about");
 
-// Fetch the content for the selected language (index.zh or index.en)
-const entry = allEntries.find((e) => e.slug === `index${language}`);
-console.log("Generated entry slug:", `index${language}`);
+// Get the entry for the Chinese language (index.zh)
+const entry = allEntries.find((e) => e.slug === "indexzh");
 
-// If no entry is found, show an error
 if (!entry) {
-  throw new Error(`Content not found for language: ${language}`);
+  throw new Error("Chinese content not found");
 }
 
 const { Content } = await entry.render();
@@ -28,8 +21,12 @@ const { title, description, meta_title, image, what_i_do } = entry.data;
 const basePath = "/tongxin-website/";
 ---
 
-
-<Base title={title} meta_title={meta_title} description={description} image={image}>
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
+>
   <section class="section">
     <div class="container">
       <div class="row md:gx-4">
@@ -59,7 +56,7 @@ const basePath = "/tongxin-website/";
               href={`${basePath}contact/`}
               class="btn btn-primary text-white py-2 px-4 inline-block"
             >
-              {language === "zh" ? "联系我们" : "Contact Us"}
+              联系我们
             </a>
           </div>
         </div>
@@ -82,4 +79,3 @@ const basePath = "/tongxin-website/";
     </div>
   </section>
 </Base>
-
