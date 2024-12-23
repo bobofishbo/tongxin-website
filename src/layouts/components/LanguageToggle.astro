@@ -3,7 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const currentLang = Astro.url.searchParams.get("lang") || "en";
 const targetLang = currentLang === "zh" ? "en" : "zh";
-const targetUrl = getRelativeLocaleUrl(targetLang, "index");
+const targetUrl = getRelativeLocaleUrl(targetLang, "");
 ---
 
 <div class="flex items-center space-x-4">
