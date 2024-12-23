@@ -3,19 +3,22 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const currentLang = Astro.url.searchParams.get("lang") || "en";
 const targetLang = currentLang === "zh" ? "en" : "zh";
-const targetUrl = getRelativeLocaleUrl(targetLang, "");
+
+// Get the root URL for the selected language, without appending "index"
+const targetEnUrl = getRelativeLocaleUrl("en", "/");
+const targetZhUrl = getRelativeLocaleUrl("zh", "/");
 ---
 
 <div class="flex items-center space-x-4">
   <button
     class="text-sm font-medium text-blue-600"
-    onclick={`window.location.href = '${getRelativeLocaleUrl("en", "")}'`}
+    onclick={`window.location.href = '${targetEnUrl}'`}
   >
     En
   </button>
   <button
     class="text-sm font-medium text-blue-600"
-    onclick={`window.location.href = '${getRelativeLocaleUrl("zh", "")}'`}
+    onclick={`window.location.href = '${targetZhUrl}'`}
   >
     中
   </button>
