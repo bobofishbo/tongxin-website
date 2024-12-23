@@ -6,6 +6,7 @@ import AutoImport from "astro-auto-import";
 import { defineConfig } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
+import {i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import config from "./src/config/config.json";
 
 export default defineConfig({

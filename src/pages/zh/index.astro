@@ -4,10 +4,13 @@ import Base from "../../layouts/Base.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { getCollection } from "astro:content";
 
+// Set the language to "zh" explicitly
+const language = "zh";
+
 // Fetch all entries for the "about" collection
 const allEntries = await getCollection("about");
 
-// Get the entry for the Chinese language (index.zh)
+// Fetch the content for the Chinese language
 const entry = allEntries.find((e) => e.slug === "indexzh");
 
 if (!entry) {
@@ -21,12 +24,7 @@ const { title, description, meta_title, image, what_i_do } = entry.data;
 const basePath = "/tongxin-website/";
 ---
 
-<Base
-  title={title}
-  meta_title={meta_title}
-  description={description}
-  image={image}
->
+<Base title={title} meta_title={meta_title} description={description} image={image}>
   <section class="section">
     <div class="container">
       <div class="row md:gx-4">
@@ -70,7 +68,7 @@ const basePath = "/tongxin-website/";
       <div class="row justify-center gy-4 text-center">
         {what_i_do.items.map((item) => (
           <div class="lg:col-4 md:col-6">
-            <i class="{{.icon}} fa-3x text-primary mb-4" />
+            <i class="icon fa-3x text-primary mb-4" />
             <h4 class="text-dark font-weight-700 mb-3">{item.title}</h4>
             <p>{item.description}</p>
           </div>

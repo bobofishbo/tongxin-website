@@ -3,22 +3,23 @@ import { Image } from "astro:assets";
 import Base from "@/layouts/Base.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-// Use Astro's currentLocale to automatically determine the language
-const language = Astro.currentLocale || "en"; // Defaults to 'en' if no locale is set
 
-console.log("Selected language:", language); // Check which language is being used
+const aboutURL = getRelativeLocaleUrl("zh", "home");
+console.log('the about url is:', aboutURL);
 
-// Fetch all entries for the "about" collection
+// Get the language from the URL query parameters
+const language = Astro.url.searchParams.get("lang") || "en";
+
+// Fetch entries for the "about" collection
 const allEntries = await getCollection("about");
 
-// Fetch the content for the selected language (index.zh or index.en)
+// Find the entry for the current language (index.en or index.zh)
 const entry = allEntries.find((e) => e.slug === `index${language}`);
-console.log("Generated entry slug:", `index${language}`);
 
-// If no entry is found, show an error
 if (!entry) {
-  throw new Error(`Content not found for language: ${language}`);
+  throw new Error("Content not found for the selected language");
 }
 
 const { Content } = await entry.render();
@@ -26,8 +27,8 @@ const { title, description, meta_title, image, what_i_do } = entry.data;
 
 // Base path for images
 const basePath = "/tongxin-website/";
----
 
+---
 
 <Base title={title} meta_title={meta_title} description={description} image={image}>
   <section class="section">
@@ -73,7 +74,7 @@ const basePath = "/tongxin-website/";
       <div class="row justify-center gy-4 text-center">
         {what_i_do.items.map((item) => (
           <div class="lg:col-4 md:col-6">
-            <i class="{{.icon}} fa-3x text-primary mb-4" />
+            <i class="icon fa-3x text-primary mb-4" />
             <h4 class="text-dark font-weight-700 mb-3">{item.title}</h4>
             <p>{item.description}</p>
           </div>
@@ -82,4 +83,3 @@ const basePath = "/tongxin-website/";
     </div>
   </section>
 </Base>
-
