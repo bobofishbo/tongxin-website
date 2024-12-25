@@ -278,6 +278,15 @@ declare module 'astro:content' {
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
 };
+"team": {
+"bo.md": {
+	id: "bo.md";
+  slug: "bo";
+  body: string;
+  collection: "team";
+  data: any
+} & { render(): Render[".md"] };
+};
 
 	};
 

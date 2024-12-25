@@ -15,6 +15,10 @@ const similarPosts = similerItems(post, posts, post.slug);
 const { Content } = await post.render();
 const { title, description, authors, categories, image, date, tags } =
   post.data;
+
+
+// Base path for images
+const basePath = "/tongxin-website/";
 ---
 
 <section class="section">
@@ -38,7 +42,7 @@ const { title, description, authors, categories, image, date, tags } =
                   >
                     {author.data.image && (
                       <Image
-                        src={author.data.image}
+                        src={`${basePath}${author.data.image}`}
                         alt={author.data.title}
                         height={50}
                         width={50}
@@ -77,19 +81,18 @@ const { title, description, authors, categories, image, date, tags } =
         </ul>
       </div>
 
-      <div class="col-12 mt-8 mb-2">
-        {
-          image && (
-            <Image
-              src={image}
-              height={500}
-              width={1000}
-              alt={title}
-              class="rounded-lg"
-            />
-          )
-        }
+      <div class="col-12 mt-8 mb-2 relative" style="width: 1000px; height: 500px;">
+        {image && (
+          <Image
+            src={`${basePath}${image}`}
+            height={500}
+            width={1000}
+            alt={title}
+            class="rounded-lg absolute top-0 left-0 w-full h-full object-contain"
+          />
+        )}
       </div>
+
 
       <div class="md:col-10">
         <div class="content mb-16 text-left">

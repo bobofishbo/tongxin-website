@@ -21,7 +21,7 @@ const basePath = "/tongxin-website/";
       <div class={i === 0 && fluid != false ? "col-12" : "col-12 sm:col-6"}>
         {post.data.image && (
           <a
-            href={`${basePath}${post.slug}`}
+            href={`${basePath}${post.slug}/`}
             class="rounded-lg block hover:text-primary overflow-hidden group"
           >
             <Image
@@ -43,7 +43,7 @@ const basePath = "/tongxin-website/";
               )
               .map((author) => (
                 <a
-                  href={`${basePath}authors/${slugify(author.data.title)}`}
+                  href={`${basePath}authors/${slugify(author.data.title)}/`}
                   class="flex items-center hover:text-primary font-medium"
                 >
                   {author.data.image && (
@@ -70,7 +70,7 @@ const basePath = "/tongxin-website/";
                 {post.data.categories.map((category: string, i: number) => (
                   <li class="inline-block">
                     <a
-                      href={`${basePath}categories/${slugify(category)}`}
+                      href={`${basePath}categories/${slugify(category)}/`}
                       class="mr-2 hover:text-primary font-medium"
                     >
                       {humanize(category)}
@@ -84,7 +84,7 @@ const basePath = "/tongxin-website/";
         </ul>
         <h3 class="mb-4">
           <a
-            href={`${basePath}${post.slug}`}
+            href={`${basePath}${post.slug}/`}
             class="block hover:text-primary transition duration-300"
           >
             {post.data.title}

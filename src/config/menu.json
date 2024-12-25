@@ -6,59 +6,33 @@
       "hasChildren": false
     },
     {
-      "name": "About",
-      "url": "/about",
+      "name": "Events",
+      "url": "/events",
+      "hasChildren": false
+    },
+    {
+      "name": "Team",
+      "url": "/team",
       "hasChildren": false
     },
     {
       "name": "Contact",
       "url": "/contact",
       "hasChildren": false
-    },
-    {
-      "name": "Pages",
-      "url": "",
-      "hasChildren": true,
-      "children": [
-        {
-          "name": "Authors",
-          "url": "/authors"
-        },
-        {
-          "name": "Categories",
-          "url": "/categories"
-        },
-        {
-          "name": "Tags",
-          "url": "/tags"
-        },
-        {
-          "name": "Elements",
-          "url": "/elements"
-        },
-        {
-          "name": "Privacy Policy",
-          "url": "/privacy-policy"
-        }
-      ]
     }
   ],
   "footer": [
     {
-      "name": "About",
-      "url": "/about"
+      "name": "Events",
+      "url": "/events"
+    },
+    {
+      "name": "Team",
+      "url": "/team"
     },
     {
       "name": "Contact",
       "url": "/contact"
-    },
-    {
-      "name": "Elements",
-      "url": "/elements"
-    },
-    {
-      "name": "Privacy Policy",
-      "url": "/privacy-policy"
     }
   ]
 }
