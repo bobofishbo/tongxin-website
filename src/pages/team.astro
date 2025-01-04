@@ -3,19 +3,24 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from "@/layouts/Base.astro";
 
+// Extract language dynamically or default to English
+const language = "en";
+
 // Fetch all entries in the "team" collection
-const teamMembers = await getCollection('team');
-console.log('teammebers:', teamMembers);
+const allTeamMembers = await getCollection('team');
+
+// Filter team members by language
+const teamMembers = allTeamMembers.filter((member) => member.data.lang === language);
 
 // Base path for images
 const basePath = "/tongxin-website/";
 ---
 
-<Base title="Our Team" description="Meet our dedicated team members.">
+<Base title={language === "zh" ? "我们的团队" : "Our Team"} description={language === "zh" ? "认识我们敬业的团队成员。" : "Meet our dedicated team members."}>
   <main class="min-h-screen p-8 pt-10">
     <div class="max-w-6xl mx-auto">
       <h1 class="text-4xl font-bold text-[#082b57] mb-20 text-center">
-        Meet Our Team
+        {language === "zh" ? "认识我们的团队" : "Meet Our Team"}
       </h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -46,7 +51,7 @@ const basePath = "/tongxin-website/";
             <div class="p-4 flex flex-col flex-grow">
               <div class="flex-grow">
                 <h3 class="text-lg font-semibold text-[#082b57]">
-                  {member.data.name || 'Unnamed Member'}
+                  {member.data.name || (language === "zh" ? "未命名成员" : "Unnamed Member")}
                 </h3>
                 <p class="text-[#082b57]/80 font-medium text-sm">
                   {member.data.title}

@@ -1,0 +1,44 @@
+---
+import config from "@/config/config.json";
+import Base from "../../layouts/Base.astro";
+import Pagination from "../../layouts/components/Pagination.astro";
+import Posts from "../../layouts/Posts.astro";
+import { getCollection } from "astro:content";
+import { sortByDate } from "../../lib/utils/sortFunctions";
+
+// Set language explicitly to "zh"
+const language = "zh";
+
+// Fetch all posts from the "posts" collection
+const allPosts = await getCollection("posts");
+
+// Filter posts for Chinese
+const filteredPosts = allPosts.filter((post) => post.data.lang === language);
+
+// Sort posts by date
+const sortedPosts = sortByDate(filteredPosts);
+
+// Pagination setup
+const totalPages = Math.ceil(sortedPosts.length / config.settings.pagination);
+const currentPage = 1; // Default to page 1 for simplicity
+const currentPosts = sortedPosts.slice(0, config.settings.pagination);
+---
+
+<Base>
+  <h1 class="text-4xl font-bold text-[#082b57] mt-10 text-center">
+    我们的过去活动
+  </h1>
+  <section class="section">
+    <div class="container">
+      <!-- Render posts -->
+      <Posts posts={currentPosts} className="mb-16" />
+
+      <!-- Render pagination -->
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        buildPageUrl={(page) => `/zh/events?page=${page}`}
+      />
+    </div>
+  </section>
+</Base>

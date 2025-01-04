@@ -6,7 +6,6 @@ import AutoImport from "astro-auto-import";
 import { defineConfig } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
-import {i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import config from "./src/config/config.json";
 
 export default defineConfig({
@@ -15,14 +14,11 @@ export default defineConfig({
   trailingSlash: "always", // Ensure trailing slashes are consistent
   outDir: "dist", // Output directory for GitHub Pages
   i18n: {
-    locales: ["en", "zh"], // Define all supported languages (English and Chinese in this case)
-    defaultLocale: "en", // Set the default language
-    routing: {
-      prefixDefaultLocale: false, // Whether or not to prefix the default locale in URLs
-    },
-    fallback: {
-      zh: "en" // If a page in Chinese is missing, fallback to English
-    },
+    locales: [
+      { path: "en", codes: ["en"] },      // English
+      { path: "zh", codes: ["zh", "zh-CN", "zh-TW"] }, // Chinese
+    ],
+    defaultLocale: "en",                 // Set English as the default locale
   },
   integrations: [
     react(),

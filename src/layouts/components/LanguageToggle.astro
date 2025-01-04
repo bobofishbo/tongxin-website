@@ -1,25 +1,35 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
+// Get current language and path
 const currentLang = Astro.url.searchParams.get("lang") || "en";
-const targetLang = currentLang === "zh" ? "en" : "zh";
+const currentPath = Astro.url.pathname.replace(/^\/tongxin-website/, ""); // Remove base path
 
-// Get the root URL for the selected language, without appending "index"
-const targetEnUrl = getRelativeLocaleUrl("en", "/");
-const targetZhUrl = getRelativeLocaleUrl("zh", "/");
+// Remove current locale prefix from the path
+const strippedPath = currentPath.replace(/^\/(en|zh)/, "");
+
+// Generate localized URLs for both languages
+const enUrl = getRelativeLocaleUrl("en", strippedPath || "index");
+const zhUrl = getRelativeLocaleUrl("zh", strippedPath || "index");
 ---
 
 <div class="flex items-center space-x-4">
-  <button
-    class="text-sm font-medium text-blue-600"
-    onclick={`window.location.href = '${targetEnUrl}'`}
-  >
-    En
-  </button>
-  <button
-    class="text-sm font-medium text-blue-600"
-    onclick={`window.location.href = '${targetZhUrl}'`}
-  >
-    中
-  </button>
+  <div class="inline-flex items-center border border-gray-300 rounded-md">
+    <a
+      href={enUrl}
+      class={`px-4 py-2 text-sm font-medium ${
+        currentLang === "en" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-100"
+      }`}
+    >
+      En
+    </a>
+    <a
+      href={zhUrl}
+      class={`px-4 py-2 text-sm font-medium ${
+        currentLang === "zh" ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-100"
+      }`}
+    >
+      中
+    </a>
+  </div>
 </div>

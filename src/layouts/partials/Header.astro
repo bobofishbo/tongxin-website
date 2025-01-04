@@ -32,9 +32,11 @@ const translatedMenu = menu.main.map((item) => ({
 // Base path
 const basePath = "/tongxin-website/";
 
-// Helper function to add a trailing slash
-const ensureTrailingSlash = (url) => {
-  return url.endsWith("/") ? url : `${url}/`;
+// Helper function to add a trailing slash and include the lang parameter
+const buildLocalizedUrl = (url) => {
+  const cleanUrl = url.endsWith("/") ? url : `${url}/`;
+  return `${basePath}${cleanUrl}`;
+
 };
 ---
 
@@ -89,9 +91,7 @@ const ensureTrailingSlash = (url) => {
                 {menu.children?.map((child) => (
                   <li class="nav-dropdown-item">
                     <a
-                      href={ensureTrailingSlash(
-                        `${basePath}${child.url.replace(/^\//, "")}`
-                      )}
+                      href={buildLocalizedUrl(child.url.replace(/^\//, ""))}
                       class="nav-dropdown-link"
                     >
                       {child.name}
@@ -103,9 +103,7 @@ const ensureTrailingSlash = (url) => {
           ) : (
             <li class="nav-item">
               <a
-                href={ensureTrailingSlash(
-                  `${basePath}${menu.url.replace(/^\//, "")}`
-                )}
+                href={buildLocalizedUrl(menu.url.replace(/^\//, ""))}
                 class="nav-link block"
               >
                 {menu.name}
@@ -120,7 +118,7 @@ const ensureTrailingSlash = (url) => {
     <div class="order-1 ml-auto flex md:order-2 md:ml-0">
       <a
         class="mr-4 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0"
-        href={ensureTrailingSlash(`${basePath}search`)}
+        href={buildLocalizedUrl("search")}
         title="search"
         aria-label="search"
       >
