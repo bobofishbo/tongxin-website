@@ -8,9 +8,21 @@ const currentPath = Astro.url.pathname.replace(/^\/tongxin-website/, ""); // Rem
 // Remove current locale prefix from the path
 const strippedPath = currentPath.replace(/^\/(en|zh)/, "");
 
-// Generate localized URLs for both languages
-const enUrl = getRelativeLocaleUrl("en", strippedPath || "index");
-const zhUrl = getRelativeLocaleUrl("zh", strippedPath || "index");
+// Check if the current path matches a post URL
+const isPost = strippedPath.match(/^\/post-\d+(en|zh)\/$/);
+
+// Handle language-specific URL for posts
+let enUrl, zhUrl;
+if (isPost) {
+  // Extract the post identifier (e.g., "post-7")
+  const postIdentifier = strippedPath.match(/^\/post-(\d+)/)?.[1];
+  enUrl = `/tongxin-website/post-${postIdentifier}en/`; // Set the English URL
+  zhUrl = `/tongxin-website/post-${postIdentifier}zh/`; // Set the Chinese URL
+} else {
+  // Generate localized URLs for regular paths
+  enUrl = getRelativeLocaleUrl("en", strippedPath || "index");
+  zhUrl = getRelativeLocaleUrl("zh", strippedPath || "index");
+}
 ---
 
 <div class="flex items-center space-x-4">

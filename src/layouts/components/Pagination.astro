@@ -2,7 +2,7 @@
 const { section, currentPage, totalPages } = Astro.props;
 import config from "@/config/config.json"; // Import site config
 
-const basePath = 'config.site.base_path || ""; // Use base_path from config'
+const basePath = config.site.base_path || ""; // Use base_path from config
 const indexPageLink = currentPage === 2;
 const hasPrevPage = currentPage > 1;
 const hasNextPage = totalPages > currentPage;
@@ -20,9 +20,9 @@ for (let i = 1; i <= totalPages; i++) {
       {hasPrevPage ? (
         <a
           href={
-            indexPageLink
-              ? `${basePath}${section ? "/" + section : "/"}`
-              : `${basePath}${section ? "/" + section : ""}/page/${currentPage - 1}`
+            currentPage === 2
+              ? `${basePath}/events/` // Add basePath to the URL for page-1
+              : `${basePath}${section ? "/" + section : ""}/page/${currentPage - 1}/` // Add trailing slash
           }
           class="border border-primary hover:bg-primary hover:text-white rounded-md h-10 w-10 leading-[36px] font-semibold text-dark flex items-center justify-center transition duration-200"
         >
@@ -61,7 +61,7 @@ for (let i = 1; i <= totalPages; i++) {
       )}
 
       {/* page index */}
-      {pageList.map((pagination, i) =>
+      {pageList.map((pagination) =>
         pagination === currentPage ? (
           <span
             aria-current="page"
@@ -72,11 +72,10 @@ for (let i = 1; i <= totalPages; i++) {
         ) : (
           <a
             href={
-              i === 0
-                ? `${basePath}${section ? "/" + section : "/"}`
-                : `${basePath}${section ? "/" + section : ""}/page/${pagination}`
+              pagination === 1
+                ? `${basePath}/events/` // Add basePath to the URL for page-1
+                : `${basePath}${section ? "/" + section : ""}/page/${pagination}/` // Add trailing slash
             }
-            aria-current="page"
             class={`border border-primary hover:bg-primary hover:text-white rounded-md h-10 w-10 leading-[36px] font-semibold text-dark flex items-center justify-center transition duration-200`}
           >
             {pagination}
@@ -87,7 +86,7 @@ for (let i = 1; i <= totalPages; i++) {
       {/* next page */}
       {hasNextPage ? (
         <a
-          href={`${basePath}${section ? "/" + section : ""}/page/${currentPage + 1}`}
+          href={`${basePath}${section ? "/" + section : ""}/page/${currentPage + 1}/`} // Add trailing slash
           class="border border-primary hover:bg-primary hover:text-white rounded-md h-10 w-10 leading-[36px] font-semibold text-dark flex items-center justify-center transition duration-200"
         >
           <span class="sr-only">Next</span>
@@ -100,7 +99,7 @@ for (let i = 1; i <= totalPages; i++) {
           >
             <path
               fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4-4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z"
               clip-rule="evenodd"
             />
           </svg>
@@ -117,7 +116,7 @@ for (let i = 1; i <= totalPages; i++) {
           >
             <path
               fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4-4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z"
               clip-rule="evenodd"
             />
           </svg>
@@ -126,4 +125,3 @@ for (let i = 1; i <= totalPages; i++) {
     </nav>
   )
 }
-

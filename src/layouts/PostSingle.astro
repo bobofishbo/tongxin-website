@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import Share from "@/components/Share.astro";
-import SimilarPosts from "@/components/SimilarPosts.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
 import similerItems from "@/lib/utils/similarItems";
@@ -11,7 +10,6 @@ import { BiCalendarEdit, BiCategoryAlt } from "react-icons/bi";
 const allAuthors = await getSinglePage("authors");
 const posts = await getSinglePage("posts");
 const { post } = Astro.props;
-const similarPosts = similerItems(post, posts, post.slug);
 const { Content } = await post.render();
 const { title, description, authors, categories, image, date, tags } =
   post.data;
@@ -122,17 +120,16 @@ const basePath = "/tongxin-website/";
         </div>
       </div>
     </article>
+
+    <!-- Back to Events Button -->
+    <div class="mt-8 text-center">
+      <a
+        href="/tongxin-website/events/"
+        class="inline-block rounded-md bg-blue-600 px-6 py-3 text-white font-semibold text-lg hover:bg-blue-700 transition duration-300"
+      >
+        Back to Events
+      </a>
+    </div>
   </div>
 </section>
 
-<!-- similar posts -->
-{
-  similarPosts.length > 0 && (
-    <section class="section pt-0">
-      <div class="container">
-        <h2 class="mb-8 text-center h3">Similar Posts</h2>
-        <SimilarPosts posts={similarPosts.slice(0, 3)} />
-      </div>
-    </section>
-  )
-}
