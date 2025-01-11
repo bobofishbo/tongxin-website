@@ -5,7 +5,9 @@ import { humanize, slugify } from "@/lib/utils/textConverter";
 import Fuse from "fuse.js";
 import { useEffect, useRef, useState } from "react";
 import { BiCalendarEdit, BiCategoryAlt } from "react-icons/bi";
+
 const { summary_length } = config.settings;
+const basePath = config.site.base_path || ""; // Define the base path
 
 export type SearchItem = {
   slug: string;
@@ -95,12 +97,12 @@ export default function SearchBar({ searchList }: Props) {
           <div key={item.slug} className={"col-12 mb-8 sm:col-6"}>
             {item.data.image && (
               <a
-                href={`/${item.slug}`}
+                href={`${basePath}${item.slug}/`} // Use basePath for the correct link
                 className="rounded-lg block hover:text-primary overflow-hidden group"
               >
                 <img
                   className="group-hover:scale-[1.03] transition duration-300 w-full"
-                  src={item.data.image}
+                  src={`${basePath}${item.data.image}`} // Use basePath for the image
                   alt={item.data.title}
                   width={445}
                   height={230}
@@ -120,7 +122,7 @@ export default function SearchBar({ searchList }: Props) {
                     {item.data.categories.map((category: string, i: number) => (
                       <li key={i} className="inline-block">
                         <a
-                          href={`/categories/${slugify(category)}`}
+                          href={`${basePath}categories/${slugify(category)}/`} // Use basePath for categories
                           className="mr-2 hover:text-primary font-medium"
                         >
                           {humanize(category)}
@@ -135,7 +137,7 @@ export default function SearchBar({ searchList }: Props) {
 
             <h3 className="mb-2">
               <a
-                href={`/${item.slug}`}
+                href={`${basePath}${item.slug}/`} // Use basePath for title link
                 className="block hover:text-primary transition duration-300"
               >
                 {item.data.title}

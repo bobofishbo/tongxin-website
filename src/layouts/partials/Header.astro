@@ -4,6 +4,12 @@ import menu from "@/config/menu.json";
 import { IoSearch } from "react-icons/io5";
 import LanguageToggle from "@/components/LanguageToggle.astro";
 
+// Get the current path
+const currentPath = Astro.url.pathname;
+
+// Check if the user is on the `/events` page
+const isEventsPage = currentPath.startsWith("/tongxin-website/events");
+
 export interface ChildNavigationLink {
   name: string;
   url: string;
@@ -116,14 +122,16 @@ const buildLocalizedUrl = (url) => {
 
     <!-- Language toggle -->
     <div class="order-1 ml-auto flex md:order-2 md:ml-0">
-      <a
-        class="mr-4 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0"
-        href={buildLocalizedUrl("search")}
-        title="search"
-        aria-label="search"
-      >
-        <IoSearch />
-      </a>
+      {isEventsPage && (
+         <a
+            class="mr-4 inline-block cursor-pointer p-2 text-xl text-dark transition hover:text-primary md:mr-0"
+            href={buildLocalizedUrl("search")}
+            title="search"
+            aria-label="search"
+          >
+            <IoSearch />
+        </a>
+      )}
       <LanguageToggle />
     </div>
   </nav>
